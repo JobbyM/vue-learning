@@ -1,0 +1,23 @@
+{
+  "name": "vue-learning",
+  "version": "1.0.0",
+  "description": "vue-learning",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JobbyM/vue-learning.git"
+  },
+  "keywords": [
+    "vue",
+    "vue-learning"
+  ],
+  "author": "JobbyM",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JobbyM/vue-learning/issues"
+  },
+  "homepage": "https://github.com/JobbyM/vue-learning#readme"
+}

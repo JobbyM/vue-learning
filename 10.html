@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Class 与Style 绑定 - 绑定内联样式</title>
+  <script src='node_modules/vue/dist/vue.js'></script>
+</head>
+<body>
+<div id="example-1" class='static' v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">
+  Class 与Style 绑定 -- 对象语法
+</div>
+<script>
+  new Vue({
+    el: '#example-1',
+    data: {
+      activeColor: 'red',
+      fontSize: 12
+    }
+  })
+</script>
+<div id="example-2" v-bind:style="styleObject">
+  Class 与Style 绑定 -- 样式对象
+</div>
+<script>
+  new Vue({
+    el: '#example-2',
+    data: {
+      styleObject: {
+        color: 'blue',
+        fontSize: '30px'
+      }
+    }
+  })
+</script>
+<div id="example-3" v-bind:style="[styleObjectA, styleObjectB]">
+  Class 与Style 绑定 -- 数组语法
+</div>
+<script>
+  new Vue({
+    el: '#example-3',
+    data: {
+      styleObjectA: {
+        color: 'blue',
+        fontSize: '30px'
+      },
+      styleObjectB: {
+        marginTop: '12px',
+        backgroundColor: 'red'
+      }
+    }
+  })
+</script>
+<div id="example-4" v-bind:style="{transform: transform}">
+    Class 与Style 绑定 -- 自动添加前缀
+</div>
+<script>
+  new Vue({
+    el: '#example-4',
+    data: {
+      transform:'rotate(7deg)'
+    }
+  })
+</script>
+</body>
+</html>

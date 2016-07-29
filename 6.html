@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>概述-响应的数据绑定</title>
+  <script src='node_modules/vue/dist/vue.js'></script>
+</head>
+<body>
+<!-- 这是我们的View -->
+<div id='example-1'>
+  Hello {{ name}}
+</div>
+<script>
+// 这是我们的的Model
+var exampleData = {
+  name: 'Vue.js'
+}
+
+// 创建一个Vue 实例或‘ViewModel’
+// 它连接View 与Model
+var exampleVM = new Vue({
+    el: '#example-1',
+    data: exampleData
+})
+</script>
+
+<div id='example-2'>
+  <p v-if='greeting'>Hello!</p>
+</div>
+<script>
+var exampleVM2 = new Vue({
+  el: '#example-2',
+  data: {
+    greeting: true
+  }
+})
+</script>
+
+</body>
+</html>

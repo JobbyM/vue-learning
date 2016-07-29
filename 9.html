@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Class 与Style 绑定</title>
+  <script src='node_modules/vue/dist/vue.js'></script>
+</head>
+<body>
+<div id="example-1" class='static' v-bind:class="{ 'class-a': isA, 'class-b': isB }"></div>
+<script>
+  new Vue({
+    el: '#example-1',
+    data: {
+      isA: true,
+      isB: false
+    }
+  })
+</script>
+<div id="example-2" class='static' v-bind:class="classObject"></div>
+<script>
+  new Vue({
+    el: '#example-2',
+    data: {
+      classObject: {
+        'class-c': true,
+        'class-d': false
+      }
+    }
+  })
+</script>
+<div id="example-3" v-bind:class="[classA, classB]"></div>
+<script>
+  new Vue({
+    el: '#example-3',
+    data: {
+      classA: 'class-a',
+      classB: 'class-b'
+    }
+  })
+</script>
+<div id="example-4" v-bind:class="[classA, isB ? classB : '']"></div>
+<script>
+  new Vue({
+    el: '#example-4',
+    data: {
+      classA: 'class-a',
+      classB: 'class-b',
+      isB: true
+    }
+  })
+</script>
+<div id="example-5" v-bind:class="[classA, { class-b: isB, class-c: isC}]"></div>
+<script>
+  new Vue({
+    el: '#example-5',
+    data: {
+      classA: 'class-a',
+      isB: true,
+      isC: true
+    }
+  })
+</script>
+</body>
+</html>

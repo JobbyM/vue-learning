@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>条件渲染</title>
+  <script src='node_modules/vue/dist/vue.js'></script>
+</head>
+<body>
+  <section id='app'>
+    <h1 v-if='ok'>Yes</h1>
+    <h1 v-else>No</h1>
+    <h2 v-show='ok'>副标题</h2>
+    <h2 v-else>副标题2</h2>
+  </section>
+<script>
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      ok : true
+    }
+  })
+</script>
+</body>
+</html>

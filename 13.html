@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>方法与事件处理器</title>
+  <script src='node_modules/vue/dist/vue.js'></script>
+</head>
+<body>
+<div id="example">
+  <button v-on:click='greet'>greet</button>
+</div>
+<script>
+  new Vue({
+    el:'#example',
+    data: {
+      name: 'Vue.js'
+    },
+    // 在methods 对象中定义方法
+    methods: {
+      greet: function(event){
+        // 方法内this 指向vm
+        alert('Hello ' + this.name + ' !')
+        // event 是原生dom 事件
+        alert(event.target.tagName)
+      }
+    }
+  })
+</script>
+<div id='example-2'>
+  <button v-on:click="say('hi',$event)"">Say Hi</button>
+  <button v-on:click="say('what', $event)">Say What</button>
+</div>
+<script>
+  new Vue({
+    el: '#example-2',
+    methods: {
+      say: function(msg, event){
+        alert(msg)
+        // 现在我们可以访问原生事件对象
+        event.preventDefault()
+      }
+    }
+  })
+</script>
+</body>
+</html>

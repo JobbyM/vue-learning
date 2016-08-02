@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>过渡</title>
+  <link rel="stylesheet" href="css/animate.css">
+  <script src='node_modules/vue/dist/vue.js'></script>
+  <style>
+  /*必须*/
+  .expand-transition {
+    transition: all .3s ease;
+    height: 30px;
+    padding: 10px;
+    background-color: #eee;
+    overflow: hidden;
+  }
+  /*.expand-enter 定义进入的开始状态*/
+  /*.expand-leave 定义离开的结束状态*/
+  .expand-enter, .expand-leave {
+    height: 0;
+    padding: 0 10px;
+    opacity: 0;
+  }
+  </style>
+</head>
+<body>
+<h1>CSS 过渡</h1>
+<h2>示例</h2>
+<div id='example'>
+  <div v-show='show' transition='expand'>hello</div>
+  <button v-on:click='toggle'>Toggle</button>
+</div>
+<script>
+  Vue.transition('expand',{
+
+    beforeEnter: function(el){
+      el.textContent = 'beforeEnter'
+    },
+    enter: function(el){
+      el.textContent = 'enter'
+    },
+    afterEnter: function(el){
+      el.textContent = 'afterEnter'
+    },
+    enterCancelled: function(el){
+      // handle cancellation
+    },
+
+    beforeLeave: function(el){
+      el.textContent = 'beforeLeave'
+    },
+    leave: function(el){
+      el.textContent = 'leave'
+    },
+    afterLeave: function(el){
+      el.textContent = 'afterLeave'
+    },
+    leaveCancelled: function(el){
+      // handle cancellation
+    }
+  })
+  var vm = new Vue({
+    el: '#example',
+    data: {
+      show: false
+    },
+    methods: {
+      toggle: function(){
+        if(this.show){
+          this.show = false;
+        }else{
+          this.show = true;
+        }
+      }
+    }
+  })
+</script>
+<h2>自定义过渡类名</h2>
+<div id='example-2'>
+  <div v-show='ok' class='animated' transition='bounce'>hello</div>
+  <button v-on:click='toggle'>Toggle</button>
+</div>
+<script>
+  Vue.transition('bounce',{
+    enterClass: 'bounceInLeft',
+    leaveClass: 'bounceOutRight'
+  })
+  var vm = new Vue({
+    el: '#example-2',
+    data: {
+      ok: false
+    },
+    methods: {
+      toggle: function(){
+        if(this.ok){
+          this.ok = false;
+        }else{
+          this.ok = true;
+        }
+      }
+    }
+  })
+</script>
+</body>
+</html>

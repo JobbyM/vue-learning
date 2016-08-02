@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>表单控件--绑定value</title>
+  <script src='node_modules/vue/dist/vue.js'></script>
+</head>
+<body>
+<h1>绑定Value</h1>
+<h2>Checkbox</h2>
+<div id="example">
+  <input type="checkbox"
+    v-model='toggle'
+    v-bind:true-value='a'
+    v-bind:false-value='b'>
+</div>
+<script>
+  var vm = new Vue({
+    el: '#example',
+    data: {
+      a: 'hello',
+      b: 'vuejs',
+      toggle: ''
+    }
+  })
+</script>
+<h2>Radio</h2>
+<div id="example-2">
+  <input type="radio" v-model='pick' v-bind:value='a'>
+</div>
+<script>
+  var vm2 = new Vue({
+    el: '#example-2',
+    data: {
+      a: 'helloworld',
+      pick: ''
+    }
+  })
+</script>
+<h2>Select Options</h2>
+<div id="example-3">
+  <select v-model='selected'>
+    <!-- 对象字面量 -->
+    <option v-bind:value="{number:123}">123</option>
+  </select>
+</div>
+<script>
+  var vm3 = new Vue({
+    el: '#example-3',
+    data: {
+      selected: ''
+    }
+  })
+</script>
+
+</body>
+</html>

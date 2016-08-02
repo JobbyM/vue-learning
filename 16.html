@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>表单控件绑定 - 参数特性</title>
+  <script src='node_modules/vue/dist/vue.js'></script>
+</head>
+<body>
+<h1>参数特性</h1>
+<h2>lazy</h2>
+<div id='example'>
+  <input type="text" v-model='msg' lazy>
+  <br>
+  {{ msg }}
+</div>
+<script>
+  new Vue({
+    el: '#example',
+    data: {
+      msg: 'Hello Vue.js'
+    }
+  })
+</script>
+<h2>number</h2>
+<div id='example-2'>
+  <input type="text" v-model='msg' number>
+  <br>
+  {{ msg }}
+</div>
+<script>
+  var vm2 = new Vue({
+    el: '#example-2',
+    data: {
+      msg: 'Hello Vue.js'
+    }
+  })
+</script>
+<h2>debounce</h2>
+<div id='example-3'>
+  <input type="text" v-model='msg' debounce='50000'>
+  <br>
+  {{ msg }}
+</div>
+<script>
+  var vm3 = new Vue({
+    el: '#example-3',
+    data: {
+      msg: 'Hello Vue.js'
+    }
+  })
+</script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>过渡- CSS 动画</title>
+  <script src='node_modules/vue/dist/vue.js'></script>
+  <script src='js/jquery-1.10.2.js'></script>
+  <style>
+    .bounce-transition {
+      display: inline-block; /* 否则scale 动画不起作用 */
+    }
+    .bounce-enter {
+      -webkit-animation: bounce-in .5s;
+      animation: bounce-in .5s;
+    }
+    .bounce-leave {
+      -webkit-animation: bounce-out .5s;
+      animation: bounce-out .5s;
+    }
+    @keyframes bounce-in {
+      0% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+      }
+      50% {
+        -webkit-transform: scale(1.5);
+        transform: scale(1.5);
+      }
+      100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+      }
+    }
+    @keyframes bounce-out {
+      0% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+      }
+      50% {
+        -webkit-transform: scale(1.5);
+        transform: scale(1.5);
+      }
+      100% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+      }
+    }
+  </style>
+</head>
+<body>
+<h1>CSS 动画</h1>
+<div id='example'>
+  <span v-show='show' transition='bounce'>Look at me!</span>
+  <br>
+  <button v-on:click='toggle'>Toggle</button>
+</div>
+<script>
+  var vm = new Vue({
+    el: '#example',
+    data: {
+      show: true
+    },
+    methods: {
+      toggle: function(){
+        if(this.show){
+          this.show = false
+        }else{
+          this.show = true
+        }
+      }
+    }
+  })
+</script>
+<h1>JavaScript 过渡</h1>
+<div id='example-2'>
+  <span v-show='show' transition='fade'>Look at me!</span>
+  <br>
+  <button v-on:click='toggle'>Toggle</button>
+</div>
+<script>
+  Vue.transition('fade', {
+    css: false,
+    enter: function(el, done){
+      // 元素已经被插入DOM
+      // 在动画结束后调用done
+      $(el)
+        .css('opacity', 0)
+        .animate({opacity: 1}, 1000, done)
+    },
+    enterCancelled: function(el){
+      $(el).stop()
+    },
+    leave: function(el, done){
+      // 与enter 相同
+      $(el).animate({opactiy: 0}, 1000, done)
+    },
+    leaveCancelled: function(el){
+      $(el).stop()
+    }
+  })
+  var vm2 = new Vue({
+    el: '#example-2',
+    data: {
+      show: true
+    },
+    methods: {
+      toggle: function(){
+        if(this.show){
+          this.show = false
+        }else{
+          this.show = true
+        }
+      }
+    }
+  })
+</script>
+<h1>渐进过渡</h1>
+<style>
+  ul {
+    padding-left: 0;
+    font-family: Helvetica, Arial,sans-serif;
+  }
+  .staggered-transition {
+    transition: all .5s ease;
+    overflow: hidden;
+    margin: 0;
+    height: 20px;
+  }
+  .staggered-enter, .staggered-leave {
+    opacity: 0;
+    height: 0;
+  }
+</style>
+<div id='example-3'>
+  <input v-model='query'>
+  <ul>
+    <li v-for='item in list | filterBy query'
+      transition='staggered'
+      stagger='100'>
+      {{item.msg}}
+    </li>
+  </ul>
+</div>
+<script>
+  var vm3 = new Vue({
+    el: '#example-3',
+    data: {
+      query: '',
+      list: [
+        {msg: 'Bluce Lee'},
+        {msg: 'Jackie Chan'},
+        {msg: 'Chuck Norris'},
+        {msg: 'Jet Li'},
+        {msg: 'Kung Fury'}
+      ]
+    }
+  })
+</script>
+</body>
+</html>

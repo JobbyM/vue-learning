@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>组件 - Props</title>
+  <script src='node_modules/vue/dist/vue.js'></script>
+</head>
+<body>
+<h1>Props</h1>
+<h2>使用Props 传递数据</h2>
+<div id='example'>
+  <child msg='hello'></child>
+</div>
+<script>
+  // 在一个步骤中扩展与定义
+  Vue.component('child',{
+    // 声明props
+    props: ['msg'],
+    // prop 可以用在模版内
+    // 可以用‘this.msg’ 设置
+    template: '<span>{{msg}}</span>'
+  })
+
+  // 创建根实例
+  new Vue({
+    el: '#example'
+  })
+</script>
+<h2>camelCase vs. kebab-case</h2>
+<div id='example-2'>
+  <child2 my-message='hello world'></child2>
+</div>
+<script>
+  // 在一个步骤中扩展与定义
+  Vue.component('child2',{
+    // camelCase in JavaScript
+    props: ['myMessage'],
+    // prop 可以用在模版内
+    // 可以用‘this.msg’ 设置
+    template: '<span>{{myMessage}}</span>'
+  })
+
+  // 创建根实例
+  new Vue({
+    el: '#example-2'
+  })
+</script>
+<h2>动态Props</h2>
+<div id='example-3'>
+  <input v-model='parentMsg'>
+  <br>
+  <child3 v-bind:my-message='parentMsg'></child3>
+</div>
+<script>
+  // 在一个步骤中扩展与定义
+  Vue.component('child3',{
+    // camelCase in JavaScript
+    props: ['myMessage'],
+    // prop 可以用在模版内
+    // 可以用‘this.msg’ 设置
+    template: '<span>{{myMessage}}</span>'
+  })
+
+  // 创建根实例
+  new Vue({
+    el: '#example-3',
+    data: {
+      parentMsg: 'Message from parent'
+    }
+  })
+</script>
+<h2>字面语法量vs. 动态语法</h2>
+<h2>Prop 绑定类型</h2>
+</body>
+</html>

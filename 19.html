@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>组件</title>
+  <script src='node_modules/vue/dist/vue.js'></script>
+</head>
+<body>
+<h1>使用组件</h1>
+<h2>注册</h2>
+<div id='example'>
+  <my-component></my-component>
+</div>
+<script>
+  // 定义
+  var MyComponent = Vue.extend({
+    template: '<div>A custom component!</div>'
+  })
+
+  // 注册
+  Vue.component('my-component', MyComponent)
+
+  // 创建根实例
+  new Vue({
+    el: '#example'
+  })
+</script>
+<h2>局部注册</h2>
+<div id="example-2">
+  <my-parent-component></my-parent-component>
+  <table>
+    <tr is='my-parent-component'></tr>
+  </table>
+</div>
+<script>
+  // 定义
+  var Child = Vue.extend({
+    template: '<div>局部注册</div>'
+  })
+
+  var Parent = Vue.extend({
+    template: '<div>父组件<my-child-component></my-child-component></div>',
+    components: {
+      // <my-child-component> 只能用在父父组件模版内
+      'my-child-component': Child
+    }
+  })
+
+  // 注册
+  Vue.component('my-parent-component', Parent)
+
+  // 创建根实例
+  new Vue({
+    el: '#example-2'
+  })
+
+</script>
+<h2>注册语法糖</h2>
+<div id="example-3">
+  <my-component2></my-component2>
+  <my-parent2></my-parent2>
+</div>
+<script>
+  // 在一个步骤中扩展与注册
+  Vue.component('my-component2',{
+    template: '<div>注册语法糖！</div>'
+  })
+
+  // 局部注册也可以这样
+  var Parent2 = Vue.extend({
+    template: '<div>哈哈<my-child2></my-child2></div>',
+    components: {
+      'my-child2': {
+        template: '<div>局部注册也可以这样<div>'
+      }
+    }
+  })
+
+  // 注册
+  Vue.component('my-parent2', Parent2)
+
+  // 创建根实例
+  new Vue({
+    el: '#example-3'
+  })
+
+</script>
+</body>
+</html>

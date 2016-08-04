@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>组件-使用Slot 分发内容</title>
+  <script src='node_modules/vue/dist/vue.js'></script>
+</head>
+<body>
+<h1>使用Slot 分发内容</h1>
+<h2>单个Slot</h2>
+<!-- 子组件模块 -->
+<template id='child-template'>
+  <div>
+    <h1> This is my component!</h1>
+    <slot>
+      如果没有分发内容则显示我
+    </slot>
+  </div>
+</template>
+<!-- 父组件模版 -->
+<div id='example'>
+  <my-component>
+    <p>This is some original content</p>
+    <p>This is some more original content</p>
+  </my-component>
+</div>
+
+<script>
+  // 注册子组件
+  Vue.component('my-component', {
+    template: '#child-template'
+  })
+
+  // 初始化父组件
+  var parent = new Vue({
+    el: '#example'
+  })
+</script>
+
+<h2>具名Slot</h2>
+<!-- 子组件模块 -->
+<template id='child-template2'>
+  <div>
+    <slot name='one'></slot>
+    <slot></slot>
+    <slot name='two'></slot>
+  </div>
+</template>
+<!-- 父组件模版 -->
+<div id='example-2'>
+  <my-component2>
+    <p slot='one'>One</p>
+    <p slot='two'>Two</p>
+    <p>Default</p>
+  </my-component2>
+</div>
+
+<script>
+  // 注册子组件
+  Vue.component('my-component2', {
+    template: '#child-template2'
+  })
+
+  // 初始化父组件
+  var parent = new Vue({
+    el: '#example-2'
+  })
+</script>
+</body>
+</html>

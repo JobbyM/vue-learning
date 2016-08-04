@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>组件-动态组件</title>
+  <script src='node_modules/vue/dist/vue.js'></script>
+</head>
+<body>
+<h1>动态组件</h1>
+<!-- 子组件模块 -->
+<template id='home-template'>
+  <div>
+    <h1> This is home-template</h1>
+  </div>
+</template>
+<template id='posts-template'>
+  <div>
+    <h1> This is posts-template</h1>
+  </div>
+</template>
+<template id='archive-template'>
+  <div>
+    <h1> This is archive-template</h1>
+  </div>
+</template>
+<!-- 父组件模版 -->
+<div id='example'>
+  <component :is='currentView'>
+  <component>
+</div>
+
+<script>
+  // 初始化父组件
+  var parent = new Vue({
+    el: '#example',
+    data: {
+      currentView: 'home'
+    },
+    components: {
+      home: {
+        template: '#home-template'
+      },
+      posts: {
+        template: '#posts-template'
+      },
+      archive: {
+        template: '#archive-template'
+      }
+    }
+  })
+</script>
+<h2>keep-alive 把切换出去的组件保留在内存中，可以保留它的状态或避免重新渲染</h2>
+<h2>activate 钩子，在切换组件时，切入组件在切人前可能需要进行异步操作，为了控制组件切换
+时长，给切入组件添加activate 钩子</h2>
+<h2>tansition-mode</h2>
+<div id="transition-mode-demo">
+    <input type="radio" v-model="view" id="v-a" value="v-a">
+    <label for="v-a">A</label>
+    <input type="radio" v-model="view" id="v-b" value="v-b">
+    <label for="v-b">B</label>
+    <component :is="view" transition="fade" transition-mode="out-in"></component>
+</div>
+<style>
+  .fade-transition{
+      transition: opacity .3s ease;
+  }
+  .fade-enter, .fade-leave{
+      opacity: 0;
+  }
+</style>
+<script>
+  new Vue({
+    el: '#transition-mode-demo',
+    data: {
+      view: 'v-a'
+    },
+    components: {
+      'v-a': {
+        template: '<div>Component A</div>'
+      },
+      'v-b': {
+        template: '<div>Component B</div>'
+      }
+    }
+  })
+</script>
+<h1>杂项</h1>
+<h2>组件和v-for</h2>
+<template id='example-3-template'>
+  <div>{{item.text}} is {{index}}</div>
+</template>
+<div id='example-3'>
+  <my-component v-for='item in items' :item='item' :index='$index'></my-component>
+</div>
+<script>
+  // 注册子组件
+  Vue.component('my-component', {
+    props: ['item', 'index'],
+    template: '#example-3-template'
+  })
+
+  // 初始化父组件
+  new Vue({
+    el: '#example-3',
+    data: {
+      items: [
+        {text: 'JavaScript'},
+        {text: 'Vuejs'},
+        {text: 'HTML5'}
+      ]
+    },
+
+  })
+</script>
+<h2>编写可复用组件</h2>
+<!-- 子组件模版 -->
+<template id='example-4-template'>
+  <p>{{foo}}</p>
+  <p>{{bar}}</p>
+  <button @click='mA'>doThis</button>
+  <button @click='mB'>doThat</button>
+  <slot name='icon'>我是图片</slot>
+  <slot name='main-text'>我是简介啊</slot>
+</template>
+<!-- 父组件模块 -->
+<div id='example-4'>
+  <my-component
+    :foo='baz'
+    :bar='qux'
+    @event-a='doThis'
+    @event-b='doThat'>
+    <!-- content     -->
+    <img slot='icon' src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" alt="">
+    <p slot='main-text'>Hello!</p>
+  </my-component>
+</div>
+<script>
+// 注册子组件
+Vue.component('my-component', {
+  props: ['foo', 'bar'],
+  template: '#example-4-template',
+  methods: {
+    mA: function(){
+      this.$dispatch('event-a','helloworld!')
+    },
+    mB: function(){
+      this.$dispatch('event-b','hellovuejs')
+    }
+  }
+})
+
+// 注册父组件
+new Vue({
+  el: '#example-4',
+  data: {
+    baz: 'bazzzzzzzzzzzzzz',
+    qux: 'quxxxxxxxxxxxxxx'
+  },
+  methods: {
+    doThis: function(msg){
+      console.log('doThis:' + msg)
+    },
+    doThat: function(msg){
+      console.log('doThat:' + msg)
+    }
+  }
+})
+</script>
+</body>
+</html>

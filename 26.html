@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>自定义指令-高级选项</title>
+  <script src='node_modules/vue/dist/vue.js'></script>
+</head>
+<body>
+<h2>高级选项</h2>
+<h3>params</h3>
+<div id='demo' v-example a="hi"></div>
+<script>
+  Vue.directive('example',{
+    params: ['a'],
+    bind: function(){
+      console.log(this.params.a);
+    }
+  })
+  new Vue({
+    el: '#demo'
+  })
+</script>
+<div id='demo-2' v-example2 v-bind:a="someValue"></div>
+<script>
+  Vue.directive('example2',{
+    params: ['a'],
+    paramWatchers: {
+      a: function(val, oldVal){
+        console.log('a changed!');
+      }
+    },
+    bind: function(){
+      // console.log(this.params.a);
+    }
+  })
+  // var vm5 = new Vue({
+  //   el: '#demo-2',
+  //   data: {
+  //     a: 'somesome'
+  //   }
+  // })
+
+  setTimeout(function(){
+    // vm5.a = 'somessssssssssss'
+  },1000)
+</script>
+<h3>deep</h3>
+<div id='demo-3' v-my-directive="obj"></div>
+<script>
+  Vue.directive('my-directive',{
+    deep: true,
+    update: function(obj){
+      // 在‘obj’ 的嵌套属性变化时调用
+    }
+  })
+  new Vue({
+    el: '#demo-3'
+  })
+</script>
+<h3>twoWay</h3>
+<h3>acceptStatement</h3>
+<h3>termial</h3>
+<h3>priority</h3>
+</body>
+</html>

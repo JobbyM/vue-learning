@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>自定义过滤器</title>
+  <script src='node_modules/vue/dist/vue.js'></script>
+</head>
+<body>
+<h1>自定义过滤器</h1>
+<h2>基础</h2>
+<div id='example'>
+  <span v-text='message | reverse'></span>
+  <br>
+  <span v-text='message | wrap "before" "after"'></span>
+</div>
+<script>
+  Vue.filter('reverse', function(value){
+    return value.split('').reverse().join('')
+  })
+  Vue.filter('wrap', function(value, begin, end){
+    return begin + value + end
+  })
+  new Vue({
+    el: '#example',
+    data: {
+      message: 'Hello Vue.js'
+    }
+  })
+</script>
+<h2>双向过滤绑定</h2>
+<div id='example-2'>
+  <input type='text' v-model='message | currencyDisplay'>
+  <br>
+  <span> Model Value: {{message | currencyDisplay}}</span>
+</div>
+<script>
+  Vue.filter('currencyDisplay', {
+    // model => view
+    // 在更新 <input> 元素之前格式化值
+    read: function(val){
+      return '$' + val.toFixed(2)
+    },
+    // view => model
+    // 在写回数据之前格式化值
+    write: function(val, oldVal){
+      var number =+ val.replace(/[^\d.]/g, '')
+      return isNaN(number) ? 0 : parseFloat(number.toFixed(2))
+    }
+  })
+  new Vue({
+    el: '#example-2',
+    data: {
+      message: 0
+    }
+  })
+</script>
+<h2>动态参数</h2>
+<div id='example-3'>
+  <input type='text' v-model='userInput'>
+  <br>
+  <span> Model Value: {{message | concat userInput}}</span>
+</div>
+<script>
+  Vue.filter('concat', function(value, input){
+    // input === this.userInput
+    return value + input
+  })
+  new Vue({
+    el: '#example-3',
+    data: {
+      userInput: 'vuejs',
+      message: 'hello'
+    }
+  })
+</script>
+</body>
+</html>

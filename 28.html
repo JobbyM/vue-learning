@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>混合</title>
+  <script src='node_modules/vue/dist/vue.js'></script>
+</head>
+<body>
+<h1>混合</h1>
+<h2>基础</h2>
+<script>
+// 定义一个混合对象
+var myMixin = {
+  created: function(){
+    this.hello()
+  },
+  methods: {
+    hello: function(){
+      console.log('hello from mixin!')
+    }
+  }
+}
+
+// 定义一个组件，使用这个混合对象
+var Component = Vue.extend({
+  mixins: [myMixin]
+})
+
+var component = new Component() // 'hello from mixin!'
+</script>
+<h2>选项合并</h2>
+<script>
+  new Vue({
+    mixins: [myMixin],
+    created: function(){
+      console.log('component hook callbed');
+    }
+  })
+</script>
+<script>
+  var mixin = {
+    methods: {
+      foo: function(){
+        console.log('foo')
+      },
+      conflicting: function(){
+        console.log('from mixin');
+      }
+    }
+  }
+
+  var vm = new Vue({
+    mixins: [mixin],
+    methods: {
+      bar: function(){
+        console.log('bar');
+      },
+      conflicting: function(){
+        console.log('from self');
+      }
+    }
+  })
+
+  vm.foo() // foo
+  vm.bar() // bar
+  vm.conflicting() // from self
+</script>
+<h2>全局混合</h2>
+<script>
+// 为myOption 自定义选项注入一个处理
+Vue.mixin({
+  created: function(){
+    var myOption = this.$options.myOption
+    if(myOption){
+      console.log(myOption);
+    }
+  }
+})
+
+new Vue({
+  myOption: 'hello!!!!' // 'hello!!!!'
+})
+</script>
+<h2>自定义选项合并策略</h2>
+</body>
+</html>
